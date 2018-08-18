@@ -1,5 +1,4 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class ViewHackSystem {
@@ -9,6 +8,6 @@ public class ViewHackSystem {
         is.read(b);
         is.close();
 
-        JavaClassExecuter.execute(b);
+        System.out.println(JavaClassExecuter.execute(b));
     }
 }
