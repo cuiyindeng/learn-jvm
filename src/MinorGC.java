@@ -5,6 +5,9 @@ public class MinorGC {
         testAllocation();
     }
 
+    /**
+     * -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:+UseParallelGC
+     */
     private static void testAllocation() {
         byte[] allocation1, allocation2, allocation3, allocation4;
         allocation1 = new byte[2 * _1MB];

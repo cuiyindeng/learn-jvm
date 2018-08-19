@@ -12,6 +12,9 @@ public class FinalizeEscapeGC {
         FinalizeEscapeGC.SAVE_HOOK = this;
     }
 
+    /**
+     * -XX:+PrintGCDetails
+     */
     public static void main(String[] args) throws InterruptedException {
         SAVE_HOOK = new FinalizeEscapeGC();
 
