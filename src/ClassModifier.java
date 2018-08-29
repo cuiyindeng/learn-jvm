@@ -36,13 +36,20 @@ public class ClassModifier {
      */
     public byte[] modifyUTF8Constant(String oldStr, String newStr) {
         int cpc = getConstantPoolCount();
+        //常量池的起始偏移位
         int offset = CONSTANT_POOL_COUNT_INDEX + u2;
+        //取出每一个常量元素
         for (int i = 0; i < cpc; i++) {
+            //每一个的常量元素的tag占1byte
             int tag = ByteUtils.bytes2Int(classByte, offset, u1);
+            //常量元素是否为字符串
             if (tag == CONSTANT_Utf8_info) {
+                //计算字符串的长度
                 int len = ByteUtils.bytes2Int(classByte, offset + u1, u2);
+                //计算字符串的起始偏移位
                 offset += (u1 + u2);
                 String str = ByteUtils.bytes2String(classByte, offset, len);
+                //判断是否为要替换的字符串
                 if (str.equalsIgnoreCase(oldStr)) {
                     byte[] strBytes = ByteUtils.string2Bytes(newStr);
                     byte[] strLen = ByteUtils.int2Bytes(newStr.length(), u2);
@@ -50,9 +57,11 @@ public class ClassModifier {
                     classByte = ByteUtils.bytesReplace(classByte, offset, len, strBytes);
                     return classByte;
                 } else {
+                    //计算下一个常量的偏移位，即字符串的偏移位加上字符串的长度
                     offset += len;
                 }
             } else {
+                //计算下一个常量的偏移位
                 offset += CONSTANT_ITEM_LENGTH[tag];
             }
         }
@@ -62,6 +71,8 @@ public class ClassModifier {
     /**
      * 获取常量池中常量的数量
      * @return 常量池数量
+     *
+     * 4byte(魔数) + 4byte(版本号) + 2byte(常亮数量) = 10byte(偏移位) = 8+ 2
      */
     public int getConstantPoolCount() {
         return ByteUtils.bytes2Int(classByte, CONSTANT_POOL_COUNT_INDEX, u2);
