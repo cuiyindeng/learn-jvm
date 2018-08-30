@@ -16,6 +16,8 @@ public class ClassModifier {
 
     /**
      * 常量池中11种常量所占的长度，CONSTANT_Utf8_info型常量除外，因为它不是定长的
+     * jdk1.7之前有11种，jdk1.7之后有14种。
+     * 这14种常量项结构还有一个特点是，其中13表占用得字节固定，只有CONSTANT_Utf8_info占用字节不固定，其大小由length决定
      */
     private static final int[] CONSTANT_ITEM_LENGTH = { -1, -1, -1, 5, 5, 9, 9, 3, 3, 5, 5, 5, 5 };
 
